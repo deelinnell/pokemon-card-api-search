@@ -63,6 +63,7 @@ body {
 
 #input_form label {
     text-shadow: 1px 0px 1px var(--darkblue), -1px 0px 1px var(--darkblue);
+    margin-left: 16px;
 }
 
 #name {
