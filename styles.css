@@ -91,6 +91,8 @@ body {
 #response_list_container {
     overflow: hidden;
     height: 435px;
+    min-height: 435px;
+    max-height: fit-content;
 }
 
 
