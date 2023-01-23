@@ -38,6 +38,7 @@ body {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-left: 8rem;
 }
 
 #search_container {
@@ -63,6 +64,7 @@ body {
 
 #input_form label {
     text-shadow: 1px 0px 1px var(--darkblue), -1px 0px 1px var(--darkblue);
+    margin-left: 16px;
 }
 
 #name {
@@ -116,8 +118,7 @@ body {
     background-image: linear-gradient(to top, #0f1a41, #192653, #202e61);
     border-radius: 6px 6px 0 0;
     border-bottom: 1px solid var(--yellow);
-    padding: 5px;
-    padding-left: 10px;
+    padding: 5px 10px 5px 10px;
     font-size: 14pt;
     max-width: fit-content;
     min-width: 200px;
