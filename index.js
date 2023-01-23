@@ -33,6 +33,7 @@ async function getRequest(url) {
 }
 
 function createAllLists(array) {
+    currentList = 0
     let listLength = 6
     let listNumber = Math.floor(array.length / listLength)
     numberOfLists = listNumber
