@@ -4,8 +4,66 @@ let numberOfLists = 0
 
 const form = document.getElementById('input_form')
 const listContainer = document.getElementById('response_list_container')
+const seriesList = document.getElementById('series_list')
+const seriesTitle = document.getElementById('series_title')
+const hamberger = document.getElementById('hamberger')
+const filters = document.getElementById('filter_container')
 
-form.addEventListener('submit', (e) => {
+seriesTitle.onclick = () => expandSort(seriesList, seriesTitle)
+
+function expandSort(list, title) {
+    if (list.style.display == 'none') {
+        openLists(list, title)
+        return
+    } else {
+        closeLists(list, title)
+    }
+}
+
+function openLists(list, title) {
+    list.style.display = 'block'
+    title.children[0].innerHTML = '-- '
+    title.classList.add('open')
+    expandFilters()
+}
+
+function closeLists(list, title) {
+    list.style.display = 'none'
+    title.children[0].innerHTML = '+ '
+    title.classList.remove('open')
+}
+
+hamberger.onclick = () => toggleFilters()
+
+function toggleFilters() {
+    if (hasClass(filters, 'hidden')) {
+        expandFilters()
+        return
+    }
+    colapseFilters()
+}
+
+function expandFilters() {
+    filters.classList.remove('hidden')
+}
+
+function colapseFilters() {
+    filters.classList.add('hidden')
+    const titles = document.querySelectorAll('.filter_title')
+    const lists = document.querySelectorAll('.filter_list')
+
+    for (let x = 0; x < titles.length; x++) {
+        closeLists(lists[x], titles[x])
+    }
+}
+
+function hasClass(element, clsName) {
+    return (' ' + element.className + ' ').indexOf(' ' + clsName + ' ') > -1;
+}
+
+/*** SUBMIT REQUEST ***/
+
+form.addEventListener('submit', async function (e) {
     e.preventDefault()
 
     const url = 'https://api.pokemontcg.io/v1/cards?'
@@ -13,26 +71,26 @@ form.addEventListener('submit', (e) => {
     const input = 'name=' + name.charAt(0).toUpperCase() + name.slice(1)
     const request = url + input
 
-    getRequest(request)
+    const data = await getRequest(request)
+    const cards = data.cards
+    createSeriesList(cards)
+    createAllLists(cards)
+    openLists(seriesList, seriesTitle)
 })
 
 async function getRequest(url) {
-
-    let data = ''
     const response = await fetch(url, {
         method: 'GET',
         headers: {
             'X-Api-Key': 'b1380ec6-7efc-4709-b529-74c3f959676a',
             'Accept': 'application/json'
         }
-    });
-    data = await response.json();
-    console.log(data.cards)
-
-    createAllLists(data.cards)
+    })
+    return response.json()
 }
 
 function createAllLists(array) {
+    let ulID = 0
     currentList = 0
     let listLength = 6
     let listNumber = Math.floor(array.length / listLength)
@@ -41,17 +99,20 @@ function createAllLists(array) {
 
     changeImage(array[0].imageUrl)
 
-    for (let x = 0; x < listNumber; x++) {
-        const ul = createUL(x)
-        array.splice(0, listLength).map((card) => {
+    for (let x = 0; x < array.length; x += 6) {
+        const ul = createUL(ulID)
+        array.slice(x, x + listLength).map((card) => {
             createList(card, lists, ul)
         })
+        ulID++
     }
 
-    if (array.length % listLength) {
-        const ul = createUL(listNumber)
+    const remander = array.length % listLength
+    if (remander && array.length > remander) {
+        const lastCards = array.slice(remander, array.length)
+        const ul = createUL(ulID)
         numberOfLists++
-        array.map(card => createList(card, lists, ul))
+        lastCards.map(card => createList(card, lists, ul))
     }
 
     listContainer.replaceChildren(lists)
@@ -88,6 +149,34 @@ function createUL(x) {
     ul.setAttribute('id', 'list-' + x)
     ul.classList.add('list')
     return ul
+}
+
+function createSeriesList(array) {
+    const cards = array
+    const seriesList = {}
+    const list = document.getElementById('series_list')
+    list.replaceChildren('')
+
+    cards.map(card => {
+        const series = card.series
+        seriesList[card.series] = series
+    })
+
+    Object.values(seriesList).forEach(value => {
+        const li = document.createElement('li')
+        li.innerHTML = value
+        li.onclick = () => onclickFilter(value, cards)
+        list.appendChild(li)
+    })
+}
+
+function onclickFilter(value, array) {
+    const filtered = array.filter(card => {
+        if (card.series == value) {
+            return card
+        }
+    })
+    createAllLists(filtered)
 }
 
 function changeImage(url) {

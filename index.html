@@ -10,6 +10,15 @@
 </head>
 <body>
     <div id="main_container">
+        <div id="filter_container" class="hidden">
+            <div id="hamberger">
+                <div class="hamberger_line"></div>
+            </div>
+            <h1 id="series_title" class="filter_title">
+                <span>+</span><div>Series</div>
+            </h1>
+            <ul id="series_list" class="filter_list"></ul>
+        </div>
         <div id="search_container">
             <form id="input_form">
                 <label for="name"><span>⤋</span> Search by Name: <span>⤋</span></label><br>
@@ -23,7 +32,7 @@
                 <button id="right_button"><p>⇨</p></button>
             </div>
         </div>
-        <div id="image-container">
+        <div id="image_container">
                 <div id="header">
                     <h1>Pokemon Card <br> API Search</h1>
                 </div>

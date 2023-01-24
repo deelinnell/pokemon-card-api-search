@@ -29,8 +29,11 @@ body {
     background-image:  linear-gradient(to top, #192653, #0b163d);
     padding: 0.5rem 1rem ;
     border-radius: 1rem 1rem 0 0;
-    text-shadow: 2px 1px 5px #36629b, -2px 1px 5px #36629b;
     border: 1px solid var(--yellow);
+    text-shadow: -3px 3px 0 var(--lightblue),
+                3px 3px 0 var(--lightblue),
+                3px -3px 0 var(--lightblue),
+            -3px -3px 0 var(--lightblue);
 }
 
 #main_container {
@@ -38,7 +41,146 @@ body {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-left: 8rem;
+}
+
+#filter_container {
+    position: relative;
+    background-color: var(--lightblue);
+    background-image: linear-gradient(to right, #365781, #254a7c, #365986);
+    border: 4px solid var(--darkblue);
+    width: 250px;
+    min-height: 400px;
+    max-height: fit-content;
+    border-radius: 10px 0 0 10px;
+    user-select: none;
+    transition: 0.5s;
+}
+
+#filter_container.hidden {
+    width: 34px;
+}
+
+#hamberger {
+    position: absolute;
+    top: 20px;
+    left: -58px;
+    background-color: var(--darkblue);
+    border-left: 4px solid var(--darkblue);
+    border-bottom: 4px solid var(--darkblue);
+    border-top: 4px solid var(--darkblue);
+    border-radius: 10px 0 0 10px;
+    width: 50px;
+    height: 50px;
+    transition: 0.3s;
+}
+
+#hamberger:hover {
+    cursor: pointer;
+    border-radius: 15px 0 0 15px;
+    background-color: var(--yellow);
+    opacity: 0.8;
+}
+
+#hamberger:hover .hamberger_line {
+    background-color: var(--darkblue);
+}
+
+#hamberger:hover .hamberger_line::before,
+#hamberger:hover .hamberger_line::after {
+    width: 35px;
+    left: 5px;
+    height: 4px;
+    background-color: var(--darkblue);
+}
+
+.hamberger_line {
+    position: relative;
+    left: 5px;
+    top: 22px;
+    height: 3px;
+    width: 40px;
+    border-radius: 20px;
+    background-color: var(--yellow);
+    border-bottom: 1px solid var(--darkblue);
+}
+
+.hamberger_line::before,
+.hamberger_line::after {
+    position: absolute;
+    left: 0px;
+    height: 3px;
+    width: 40px;
+    border-radius: 20px;
+    background-color: var(--yellow);
+    content: '';
+}
+
+.hamberger_line::before {
+    top: 15px;
+}
+
+.hamberger_line::after {
+    top: -15px;
+}
+
+#filter_container h1 {
+    padding-left: 10px;
+}
+
+#filter_container h1 > div {
+    position: absolute;
+    top: 0;
+    left: 30px;
+    padding-left: 10px;
+    color: var(--darkblue);
+	text-shadow: -1px 1px 0 var(--yellow),
+				  1px 1px 0 var(--yellow),
+				 1px -1px 0 var(--yellow),
+				-1px -1px 0 var(--yellow);
+}
+
+#filter_container h1:hover {
+    cursor: pointer;
+    background-color: var(--yellow);
+}
+
+#filter_container h1:hover span {
+    color: var(--darkblue);
+}
+
+.filter_title {
+    border-radius: 5px 0 0 0;
+    position: relative;
+    align-items: center;
+    border-bottom: 3px solid var(--darkblue);
+    overflow: hidden;
+}
+
+.filter_title.open {
+    background-color: var(--darkblue);
+}
+
+.filter_title.open h1 > div {
+    color: var(--lightblue);
+}
+
+.filter_list {
+    display: none;
+    list-style: none;
+    overflow: hidden;
+}
+
+.filter_list li {
+    padding: 2px;
+    padding-left: 12px;
+    white-space: nowrap;
+}
+
+.filter_list li:hover {
+    cursor: pointer;
+    background-color: var(--yellow);
+    outline: 1px solid var(--darkblue);
+    color: var(--lightblue);
 }
 
 #search_container {
@@ -72,6 +214,7 @@ body {
     color: black;
     text-align: center;
     font-size: 12pt;
+    border-radius: 25px;
 }
 
 #submit {
@@ -84,10 +227,18 @@ body {
     background-image: linear-gradient(to top, #34447c, #293974);
     box-shadow: 2px 2px 5px var(--darkblue);
     outline: 1px solid black;
+    border-radius: 15px;
+    transition: 0.3s;
 }
 
-#submit:hover {
+#submit:hover,
+#left_button:hover,
+#right_button:hover,
+.list button:hover {
     cursor: pointer;
+    background-color: var(--darkblue);
+    background-image: linear-gradient(to top, #192653, #121b3a);
+    box-shadow: 0 0 5px var(--yellow);
 }
 
 #response_list_container {
@@ -114,7 +265,10 @@ body {
 
 .list h2 {
     color: var(--yellow);
-    text-shadow: 1px 0px 1px var(--darkblue), -1px 0px 1px var(--darkblue);
+    text-shadow: -1px 1px 0 var(--lightblue),
+            1px 1px 0 var(--lightblue),
+            1px -1px 0 var(--lightblue),
+        -1px -1px 0 var(--lightblue);
     background-image: linear-gradient(to top, #0f1a41, #192653, #202e61);
     border-radius: 6px 6px 0 0;
     border-bottom: 1px solid var(--yellow);
@@ -176,7 +330,7 @@ button:hover {
     cursor: pointer;
 }
 
-#image-container {
+#image_container {
     position: relative;
     display: flex;
     justify-content: center;
