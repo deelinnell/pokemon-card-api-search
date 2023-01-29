@@ -184,11 +184,6 @@ body {
     outline: 1px solid var(--darkblue);
     color: var(--lightblue);
 }
-
-#series_list {
-    display: none;
-}
-
 /**** SEARCH CONTAINER ****/
 
 #search_container {
