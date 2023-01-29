@@ -74,6 +74,7 @@ form.addEventListener('submit', async function (e) {
 
     const data = await getRequest(request)
     const cards = data.cards
+    console.log(cards)
     createSeriesList(cards)
     createAllLists(cards)
     openLists(seriesList, seriesTitle)
@@ -93,14 +94,12 @@ async function getRequest(url) {
 function createAllLists(array) {
     let ulID = 0
     currentList = 0
-    let listLength = 6
+    let listLength = 18
     let listNumber = Math.floor(array.length / listLength)
     numberOfLists = listNumber
     const lists = document.createElement('div')
 
-    changeImage(array[0].imageUrl)
-
-    for (let x = 0; x < array.length; x += 6) {
+    for (let x = 0; x < array.length; x += listLength) {
         const ul = createUL(ulID)
         array.slice(x, x + listLength).map((card) => {
             createList(card, lists, ul)
@@ -118,32 +117,44 @@ function createAllLists(array) {
 
     listContainer.replaceChildren(lists)
 
-    document.getElementById('list-0').style.display = 'block'
+    document.getElementById('list-0').style.display = 'grid'
 }
 
 function createList(card, lists, list) {
 
     const li = document.createElement('li')
+    const img = document.createElement('img')
+    img.src = card.imageUrl
+    img.onclick = () => changeImage(card)
 
-    const button = document.createElement('button')
-    button.innerHTML = 'Image'
-    button.onclick = () => changeImage(card.imageUrl)
-
-    const div = document.createElement('div')
-
-    const h2 = document.createElement('h2')
-    h2.innerHTML = card.name + ':'
-
-    const h3 = document.createElement('h3')
-    h3.innerHTML = card.set + ' | ' + card.series
-
-    div.appendChild(h2)
-    div.appendChild(h3)
-    li.appendChild(div)
-    li.appendChild(button)
+    li.appendChild(img)
     list.appendChild(li)
     lists.appendChild(list)
 }
+
+// function createList(card, lists, list) {
+
+//     const li = document.createElement('li')
+
+//     const button = document.createElement('button')
+//     button.innerHTML = 'Image'
+//     button.onclick = () => changeImage(card.imageUrl)
+
+//     const div = document.createElement('div')
+
+//     const h2 = document.createElement('h2')
+//     h2.innerHTML = card.name + ':'
+
+//     const h3 = document.createElement('h3')
+//     h3.innerHTML = card.set + ' | ' + card.series
+
+//     div.appendChild(h2)
+//     div.appendChild(h3)
+//     li.appendChild(div)
+//     li.appendChild(button)
+//     list.appendChild(li)
+//     lists.appendChild(list)
+// }
 
 function createUL(x) {
     const ul = document.createElement('ul')
@@ -180,8 +191,51 @@ function onclickFilter(value, array) {
     createAllLists(filtered)
 }
 
-function changeImage(url) {
-    document.querySelector('#image').src = url
+const modal = document.getElementById('image_modal')
+const imageContainer = document.getElementById('image_container')
+
+const rightContainer = document.querySelector('.right_container')
+
+function changeImage(card) {
+    const container = document.createElement('div')
+    const div2 = document.createElement('div')
+    const div3 = document.createElement('div')
+    const name = document.createElement('h1')
+    const setName = document.createElement('h2')
+    const seriesName = document.createElement('h3')
+    const set = document.createElement('h4')
+    const series = document.createElement('h4')
+
+    name.innerHTML = card.name
+    set.innerHTML = "Set: "
+    setName.innerHTML = card.set
+    series.innerHTML = "Series: "
+    seriesName.innerHTML = card.series
+
+    container.classList.add('card_info')
+    div2.classList.add('card_text')
+    div3.classList.add('card_text')
+
+    container.appendChild(name)
+    div2.appendChild(set)
+    div2.appendChild(setName)
+    container.appendChild(div2)
+    div3.appendChild(series)
+    div3.appendChild(seriesName)
+    container.appendChild(div3)
+
+    rightContainer.insertBefore(container, rightContainer.children[0])
+
+    document.querySelector('#image').src = card.imageUrlHiRes
+    modal.style.display = 'flex'
+}
+
+document.getElementById('close_modal').onclick = () => modal.style.display = 'none'
+
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
 }
 
 document.getElementById('left_button').onclick = () => {
@@ -198,7 +252,7 @@ function moveListsLeft() {
     currentList = currentList - 1
 
     const newList = document.getElementById('list-' + currentList)
-    newList.style.display = 'block'
+    newList.style.display = 'grid'
 }
 
 function moveListsRight() {
@@ -208,5 +262,5 @@ function moveListsRight() {
     currentList = currentList + 1
 
     const newList = document.getElementById('list-' + currentList)
-    newList.style.display = 'block'
+    newList.style.display = 'grid'
 }

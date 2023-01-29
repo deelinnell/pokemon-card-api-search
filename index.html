@@ -5,37 +5,51 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="index.js" defer></script>
     <title>Pokémon Card API Search</title>
 </head>
 <body>
-    <div id="main_container">
-        <div id="filter_container" class="hidden">
-            <div id="hamberger">
-                <div class="hamberger_line"></div>
-            </div>
-            <h1 id="series_title" class="filter_title">
-                <span>+</span><div>Series</div>
-            </h1>
-            <ul id="series_list" class="filter_list"></ul>
-        </div>
-        <div id="search_container">
+    <div class="background"></div>
+    <div class="search_container">
+        <div class="input_container">
+            <img id="logo" src="images/logo.png" alt="">
             <form id="input_form">
-                <label for="name"><span>⤋</span> Search by Name: <span>⤋</span></label><br>
-                <input type="text" id="name" name="name" placeholder="e.g. Charizard">
-                <input type="submit" id="submit" value="Send Request">
+                <h3 id="name_header"><span>⤋</span> Search by Name: <span>⤋</span></h3>
+                <div class="search_bar">
+                    <input type="text" id="name" name="name" placeholder="e.g. Charizard">
+                    <button type="submit" id="submit"><i class="fa fa-search"></i></button>
+                </div>
             </form>
+        </div>
+    </div>
+    <div id="main_container">
+        <div class="left_container">
+            <div id="filter_container" class="hidden">
+                <div id="hamberger">
+                    <div class="hamberger_line"></div>
+                </div>
+                <h1 id="series_title" class="filter_title">
+                    <span>+</span><div>Series</div>
+                </h1>
+                <ul id="series_list" class="filter_list"></ul>
+            </div>
+        </div>   
+        <div id="response_container">
             <div id="response_list_container">
             </div>
-            <div id="button_container">
-                <button id="left_button"><p>⇦</p></button>
-                <button id="right_button"><p>⇨</p></button>
-            </div>
         </div>
+        <div class="right_container">
+        </div>
+    </div>
+    <div id="button_container">
+        <button id="left_button"><p>⇦</p></button>
+        <button id="right_button"><p>⇨</p></button>
+        <img id="pokeball" src="images/pokeball.png" alt="">
+    </div>
+    <div id="image_modal">
         <div id="image_container">
-                <div id="header">
-                    <h1>Pokemon Card <br> API Search</h1>
-                </div>
+            <div id="close_modal">✖</div>
             <img src="./images/card_back.png" alt="none" id="image">
         </div>
     </div>
