@@ -43,6 +43,8 @@ body {
     align-items: center;
 }
 
+/**** FILTER CONTAINER ****/
+
 #filter_container {
     position: relative;
     background-color: var(--lightblue);
@@ -183,6 +185,12 @@ body {
     color: var(--lightblue);
 }
 
+#series_list {
+    display: none;
+}
+
+/**** SEARCH CONTAINER ****/
+
 #search_container {
     display: flex;
     flex-direction: column;
@@ -268,7 +276,7 @@ body {
     text-shadow: -1px 1px 0 var(--lightblue),
             1px 1px 0 var(--lightblue),
             1px -1px 0 var(--lightblue),
-        -1px -1px 0 var(--lightblue);
+            -1px -1px 0 var(--lightblue);
     background-image: linear-gradient(to top, #0f1a41, #192653, #202e61);
     border-radius: 6px 6px 0 0;
     border-bottom: 1px solid var(--yellow);
@@ -329,6 +337,8 @@ body {
 button:hover {
     cursor: pointer;
 }
+
+/**** IMAGE CONTAINER ****/
 
 #image_container {
     position: relative;

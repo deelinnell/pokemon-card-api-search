@@ -9,6 +9,7 @@ const seriesTitle = document.getElementById('series_title')
 const hamberger = document.getElementById('hamberger')
 const filters = document.getElementById('filter_container')
 
+seriesList.style.display = 'none'
 seriesTitle.onclick = () => expandSort(seriesList, seriesTitle)
 
 function expandSort(list, title) {
