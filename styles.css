@@ -154,7 +154,7 @@ body {
     border-left: 4px solid var(--darkred);
     border-top: 4px solid var(--darkred);
     border-bottom: 4px solid var(--darkred);
-    width: 250px;
+    width: 70%;
     min-height: 400px;
     max-height: fit-content;
     border-radius: 10px 0 0 10px;
@@ -523,7 +523,7 @@ button:hover {
     height: 30px;
     font-size: 16pt;
     background-color: #111;
-    border-radius: 5px;
+    border-radius: 0 5px 0 5px;
 }
 
 #close_modal:hover {
@@ -534,7 +534,7 @@ button:hover {
 }
 
 #image {
-    width: 450px;
+    width: 500px;
     border-radius: 2vh;
     box-shadow: 2px 2px 15px #111;
 }
