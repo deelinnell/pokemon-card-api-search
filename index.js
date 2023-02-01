@@ -1,4 +1,5 @@
-
+let currentArray = []
+let currentIndex = ''
 let currentList = 0
 let numberOfLists = 0
 
@@ -78,6 +79,8 @@ form.addEventListener('submit', async function (e) {
     createSeriesList(cards)
     createAllLists(cards)
     openLists(seriesList, seriesTitle)
+
+    document.querySelector('.background').style.opacity = '0.4'
 })
 
 async function getRequest(url) {
@@ -112,12 +115,15 @@ function createAllLists(array) {
         const lastCards = array.slice(remander, array.length)
         const ul = createUL(ulID)
         numberOfLists++
-        lastCards.map(card => createList(card, lists, ul))
+        lastCards.map(card => {
+            createList(card, lists, ul)
+        })
     }
 
     listContainer.replaceChildren(lists)
 
     document.getElementById('list-0').style.display = 'grid'
+    currentArray = array
 }
 
 function createList(card, lists, list) {
@@ -125,7 +131,7 @@ function createList(card, lists, list) {
     const li = document.createElement('li')
     const img = document.createElement('img')
     img.src = card.imageUrl
-    img.onclick = () => changeImage(card)
+    img.onclick = () => cardOnclick(card)
 
     li.appendChild(img)
     list.appendChild(li)
@@ -196,7 +202,10 @@ const imageContainer = document.getElementById('image_container')
 
 const rightContainer = document.querySelector('.right_container')
 
-function changeImage(card) {
+function cardOnclick(card) {
+    const imageArray = currentArray.slice(currentList * 18, (currentList + 1) * 18)
+    currentIndex = imageArray.indexOf(card)
+
     const container = document.createElement('div')
     const div2 = document.createElement('div')
     const div3 = document.createElement('div')
@@ -226,8 +235,35 @@ function changeImage(card) {
 
     rightContainer.insertBefore(container, rightContainer.children[0])
 
-    document.querySelector('#image').src = card.imageUrlHiRes
+    changeImage(card.imageUrlHiRes)
+    modalButtons(imageArray)
+
     modal.style.display = 'flex'
+}
+
+function modalButtons(array) {
+    const left = document.getElementById('modal_left')
+    const right = document.getElementById('modal_right')
+    left.onclick = () => {
+        if (currentIndex === 0) {
+            currentIndex = array.length - 1
+        } else {
+            currentIndex--
+        }
+        changeImage(array[currentIndex].imageUrlHiRes)
+    }
+    right.onclick = () => {
+        if (currentIndex === array.length - 1) {
+            currentIndex = 0
+        } else {
+            currentIndex++
+        }
+        changeImage(array[currentIndex].imageUrlHiRes)
+    }
+}
+
+function changeImage(url) {
+    document.querySelector('#image').src = url
 }
 
 document.getElementById('close_modal').onclick = () => modal.style.display = 'none'
